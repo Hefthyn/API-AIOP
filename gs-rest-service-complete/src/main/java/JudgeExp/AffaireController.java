@@ -19,9 +19,16 @@ public class AffaireController {
 	
 	// création d’une affaire
 	@RequestMapping(value = "/affaires", method = RequestMethod.POST)
-	public void getAffaire(@RequestParam(value="nomAffaire", required=true) String nomAffaire) {
+	public void createAffaire(@RequestParam(value="nomAffaire", required=true) String nomAffaire) {
 	    Affaire x = new Affaire (nomAffaire);
 	    x.create();    
+	}
+	
+	// Création d'un frais d'une affaire
+	@RequestMapping(value = "/affaire/{idAffaire}/frais", method = RequestMethod.POST)
+	public void createFraisAffaire(@PathVariable("idAffaire") long idAffaire, @RequestParam("libFrais") String libFrais, @RequestParam("prixFrais") double prixFrais) {
+	    Frais x = new Frais(libFrais, prixFrais);
+	    x.save(idAffaire);
 	}
 	
 	/**
@@ -29,16 +36,25 @@ public class AffaireController {
 	 */
 	
 	// Read d'une affaire
-	@RequestMapping(value = "/affaire/{id}", method = RequestMethod.GET)
-	public Affaire getAffaire(@PathVariable("id") long id) {
-	    return new Affaire(id);
+	@RequestMapping(value = "/affaire/{idAffaire}", method = RequestMethod.GET)
+	public Affaire getAffaire(@PathVariable("idAffaire") long idAffaire) {
+	    
+		// il faudra le charger depuis la bdd et appeller le constructeur vide
+		Affaire x = new Affaire();
+	    //x.load(idAffaire);
+		
+	    return x;
 	}
 	
 	// Read des affaires
 	@RequestMapping(value = "/affaires", method = RequestMethod.GET)
 	public List<Affaire> getAffaires() {
+		
+		// Il faudra load toutes les affaires depuis la bdd
 	    //Affaire x = new Affaire();
 	    //return x.getAllAffaires();
+		
+		// en attendant :
 		List<Affaire> x = new ArrayList<Affaire>();
 		x.add(new Affaire(1));
 		x.add(new Affaire(2));
@@ -47,25 +63,41 @@ public class AffaireController {
 	}
 	
 	// Read des frais d'une affaire
-	@RequestMapping(value = "/affaire/{id}/frais", method = RequestMethod.GET)
-	public List<Frais> getFraisAffaire(@PathVariable("id") long id) {
-	    Affaire x = new Affaire(id);
+	@RequestMapping(value = "/affaire/{idAffaire}/frais", method = RequestMethod.GET)
+	public List<Frais> getFraisAffaire(@PathVariable("idAffaire") long idAffaire) {
+		
+		// il faudra le charger depuis la bdd et appeller le constructeur vide
+		Affaire x = new Affaire(idAffaire);
+		//x.load(idAffaire);
+		
 	    return x.getFrais();
+	}
+	
+	// Read des frais d'une affaire
+	@RequestMapping(value = "/affaire/{idAffaire}/etat", method = RequestMethod.GET)
+	public String getEtatAffaire(@PathVariable("idAffaire") long idAffaire) {
+		
+		// il faudra le charger depuis la bdd et appeller le constructeur vide
+		Affaire x = new Affaire(idAffaire);
+		//x.load(idAffaire);
+		
+	    return x.getEtat();
 	}
 	
 	/**
 	 * METHODE PUT
 	 */
 	// Modification d'une affaire
-	@RequestMapping(value = "/affaire/{id}", method = RequestMethod.GET)
-	public void PutAffaire(@PathVariable("id") long id, 	@PathVariable("nomAffaire") String nom,
-			@PathVariable("numDossier") long dossier, @PathVariable("numParquet") long parquet, @PathVariable("dateOrdre") String dateOrdre,
-			@PathVariable("dateMax") String dateMax, @PathVariable("dateProrogation") String dateProrogation,
-			@PathVariable("nbPageNb") long pageNb, @PathVariable("nbPageCouleur") long pageCoul, @PathVariable("nbHExpertise") long hExp,
-			@PathVariable("nbHDepalacement") long hDepl, @PathVariable("dateDevis") String dateDevis, @PathVariable("pourcentageDevis") double pourcentDevis,
-			@PathVariable("numFacture") long facture, @PathVariable("montantFacture") double montantFacture, @PathVariable("pourcentageRemise") double pourcentRemise,
-			@PathVariable("delais10j") boolean delais10j, @PathVariable("dateRemise") String dateRemise, @PathVariable("numInstruction") long instruction) {
-	    Affaire x = new Affaire(id);
+	@RequestMapping(value = "/affaire/{idAffaire}", method = RequestMethod.GET)
+	public void PutAffaire(@RequestParam("idAffaire") long idAffaire, 	@RequestParam("nomAffaire") String nom,
+			@RequestParam("numDossier") long dossier, @RequestParam("numParquet") long parquet, @RequestParam("dateOrdre") String dateOrdre,
+			@RequestParam("dateMax") String dateMax, @RequestParam("dateProrogation") String dateProrogation,
+			@RequestParam("nbPageNb") long pageNb, @RequestParam("nbPageCouleur") long pageCoul, @RequestParam("nbHExpertise") long hExp,
+			@RequestParam("nbHDepalacement") long hDepl, @RequestParam("dateDevis") String dateDevis, @RequestParam("pourcentageDevis") double pourcentDevis,
+			@RequestParam("numFacture") long facture, @RequestParam("montantFacture") double montantFacture, @RequestParam("pourcentageRemise") double pourcentRemise,
+			@RequestParam("delais10j") boolean delais10j, @RequestParam("dateRemise") String dateRemise, @RequestParam("numInstruction") long instruction) {
+	    
+		Affaire x = new Affaire(idAffaire);
 	    x.setNomAffaire(nom);
 	    x.setNumDossier(dossier);
 	    x.setNumParquet(parquet);
@@ -88,17 +120,48 @@ public class AffaireController {
 	}
 	
 	// Modifie l'état d'une affaire
-	@RequestMapping(value = "/affaire/{id}/etat", method = RequestMethod.PUT)
-	public void putEtat(@PathVariable("id") long id, @RequestParam("etat") String etat) {
-	    Affaire x = new Affaire(id);
+	@RequestMapping(value = "/affaire/{idAffaire}/etat", method = RequestMethod.PUT)
+	public void putEtat(@PathVariable("idAffaire") long idAffaire, @RequestParam("etat") String etat) {
+		
+		// il faudra le charger depuis la bdd et appeller le constructeur vide
+		Affaire x = new Affaire(idAffaire);
+		//x.load(idAffaire);
+		
 	    x.setEtat(etat);
 	    x.save();
 	}
 	
-	// test
+	// Modifie un frais d'une affaire
+	@RequestMapping(value = "/affaire/{idAffaire}/frais/{idFrais}", method = RequestMethod.PUT)
+	public void putFrais(@PathVariable("idAffaire") long idAffaire, @PathVariable("idFrais") long idFrais,
+						@RequestParam("libFrais") String libFrais, @RequestParam("prixFrais") double prixFrais) {
+	    
+		Frais x = new Frais(idFrais);
+	    x.setLibFrais(libFrais);
+	    x.setPrixFrais(prixFrais);
+	    x.save(idAffaire);
+	}
+	
+	
+	
+	/**
+	 * METHODE DELET
+	 */
+	// suppression d'un frais d'une affaire
+	@RequestMapping(value = "/affaires/{id}/frais/{id2}", method = RequestMethod.DELETE)
+	public void getAffaire2(@PathVariable("id") long id, @PathVariable("id2") long idFrais) {
+	    Frais x = new Frais(id, idFrais);
+	    x.delete();
+	}
+	
+	
+	
+	/** test
 	@RequestMapping(value = "/affaires/{id}", method = RequestMethod.GET)
 	public Affaire getAffaire2(@PathVariable("id") int id) {
 	    return new Affaire(id, "test");
 	}
+	*/
+	
 }
 

@@ -48,6 +48,7 @@ public class Affaire {
 	}
 	
 	public Affaire (long id) {
+		
 		setIdAffaire(id);
 		setNomAffaire("Affaire" + id);
 		setNumInstruction(1);
@@ -303,6 +304,11 @@ public class Affaire {
 	// Recherche de toute les affaires de la base. 
 	public List<Affaire> getAllAffaires() {
 		return null;
+	}
+
+	// charge une affaire
+	public void load(long id) {
+		
 	}
 
 }

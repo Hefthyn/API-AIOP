@@ -6,6 +6,10 @@ public class Frais {
 	private String libFrais;
 	private double prixFrais;
 	
+	/*
+	 * CONSTRUCTEURS
+	 */
+	
 	public Frais () {
 			
 		}
@@ -15,7 +19,21 @@ public class Frais {
 		setLibFrais("frais " + id);
 		setPrixFrais(id * 12.8);
 	}
+
+	public Frais(long id, long idFrais) {
+		load(id, idFrais);
+	}
 	
+	public Frais(String libFrais, double prixFrais) {
+		this.setLibFrais(libFrais);
+		this.setPrixFrais(prixFrais);
+	}
+	
+	/*
+	 * GETTERS and SETTERS
+	 */
+
+
 	public long getIdFrais() {
 		return idFrais;
 	}
@@ -38,6 +56,28 @@ public class Frais {
 
 	public void setPrixFrais(double prixFrais) {
 		this.prixFrais = prixFrais;
+	}
+	
+	
+	/**
+	 * Méthodes lidées à l'ORM
+	 */
+	
+	// Supprime un élément de la base
+	public void delete() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	// charge un frais d'une affaire
+	public void load(long idAffaire, long idFrais) {
+		
+	}
+	
+	// Sauvegarde un frais dans une affaire
+	public void save(long idAffaire) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	
