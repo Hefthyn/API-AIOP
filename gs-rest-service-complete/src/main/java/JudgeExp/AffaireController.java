@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AffaireController {
 
-	/**
+	/*
 	 * METHODE POST
 	 */
 	
@@ -31,7 +31,7 @@ public class AffaireController {
 	    x.save(idAffaire);
 	}
 	
-	/**
+	/*
 	 * METHODE GET
 	 */
 	
@@ -84,12 +84,12 @@ public class AffaireController {
 	    return x.getEtat();
 	}
 	
-	/**
+	/*
 	 * METHODE PUT
 	 */
 	// Modification d'une affaire
-	@RequestMapping(value = "/affaire/{idAffaire}", method = RequestMethod.GET)
-	public void PutAffaire(@RequestParam("idAffaire") long idAffaire, 	@RequestParam("nomAffaire") String nom,
+	@RequestMapping(value = "/affaire/{idAffaire}", method = RequestMethod.PUT)
+	public void PutAffaire(@PathVariable("idAffaire") long idAffaire, 	@RequestParam("nomAffaire") String nom,
 			@RequestParam("numDossier") long dossier, @RequestParam("numParquet") long parquet, @RequestParam("dateOrdre") String dateOrdre,
 			@RequestParam("dateMax") String dateMax, @RequestParam("dateProrogation") String dateProrogation,
 			@RequestParam("nbPageNb") long pageNb, @RequestParam("nbPageCouleur") long pageCoul, @RequestParam("nbHExpertise") long hExp,
@@ -144,7 +144,7 @@ public class AffaireController {
 	
 	
 	
-	/**
+	/*
 	 * METHODE DELET
 	 */
 	// suppression d'un frais d'une affaire
@@ -156,7 +156,7 @@ public class AffaireController {
 	
 	
 	
-	/** test
+	/* test
 	@RequestMapping(value = "/affaires/{id}", method = RequestMethod.GET)
 	public Affaire getAffaire2(@PathVariable("id") int id) {
 	    return new Affaire(id, "test");
