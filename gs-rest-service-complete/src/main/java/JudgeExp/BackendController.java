@@ -11,10 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class BackendController {
 
-	/*
-	 * METHODE POST
+	/* ---------------------------------------------------- METHODE POST ---------------------------------------------------------------*/
+	
+	/**
+	 * Méthode de création d'un typeMission d'un typeObjet
+	 * @param idTypeObjet identifiant du type d'objet
+	 * @param idTypeMission identifiant du type de mission
+	 * @param libTypeMission libellé du type de Mission
 	 */
-	// Création d'un typeMission d'un typeObjet
 	@RequestMapping(value = "/typeObjet/{idTypeObjet}/typeMissions", method = RequestMethod.POST)
 	public void createFraisAffaire(
 			@PathVariable("idTypeObjet") long idTypeObjet,
@@ -24,10 +28,12 @@ public class BackendController {
 		t.save(idTypeObjet);
 	}
 
-	/*
-	 * METHODE GET
+	/* ---------------------------------------------------- METHODE GET ---------------------------------------------------------------*/
+
+	/**
+	 * Méthode de récupération des types d'objet
+	 * @return liste des type d'objets
 	 */
-	// Read des affaires
 	@RequestMapping(value = "/typeObjets", method = RequestMethod.GET)
 	public List<TypeObjet> getTypeObjets() {
 		// Il faudra load toutes les typeObjets depuis la bdd
@@ -35,7 +41,11 @@ public class BackendController {
 		return x;
 	}
 
-	// Read des typesMissions d'un typeobjet
+	/**
+	 * Méthode de récupération des type sMissions d'un type objet
+	 * @param idTypeObjet identifiant du type d'objet
+	 * @return liste des types mission du type objet
+	 */
 	@RequestMapping(value = "/typeObjet/{idTypeObjet}/typeMissions", method = RequestMethod.GET)
 	public List<TypeMission> getTypeMssions(
 			@PathVariable("idTypeObjet") long idTypeObjet) {
@@ -46,7 +56,12 @@ public class BackendController {
 		return t.getTypeMissions();
 	}
 
-	// Read un typesMissions d'un typeobjet
+	/**
+	 * Méthode de récupération d'un type Mission d'un type objet
+	 * @param idTypeObjet identifiant du type d'objet
+	 * @param idTypeMission identifiant du type de mission
+	 * @return type mission
+	 */
 	@RequestMapping(value = "/typeObjet/{idTypeObjet}/typeMission/{idTypeMission}", method = RequestMethod.GET)
 	public TypeMission getTypeMssion(
 			@PathVariable("idTypeObjet") long idTypeObjet,
@@ -58,10 +73,14 @@ public class BackendController {
 		return t.getTypeMission(idTypeMission);
 	}
 
-	/*
-	 * Methode PUT
+	/* ---------------------------------------------------- METHODE PUT ---------------------------------------------------------------*/
+
+	/**
+	 * Méthode de modification d'un type Mission d'un typeObjet
+	 * @param idTypeObjet identifiant du type d'objet
+	 * @param idTypeMission identifiant du type de mission à modifier
+	 * @param libTypeMission nouveau libellé
 	 */
-	// modification un typeMission d'un typeObjet
 	@RequestMapping(value = "/typeObjet/{idTypeObjet}/typeMission/{idTypeMission}", method = RequestMethod.PUT)
 	public void putScelle(@PathVariable("idTypeObjet") long idTypeObjet,
 			@PathVariable("idTypeMission") long idTypeMission,
@@ -74,11 +93,13 @@ public class BackendController {
 		tm.save(idTypeObjet);
 	}
 
-	/*
-	 * Methode DELET
-	 */
+	/* ---------------------------------------------------- METHODE DELET ---------------------------------------------------------------*/
 
-	// suppression un typeMission d'un typeObjet
+	/**
+	 * Méthode de suppression d'un type Mission d'un type Objet
+	 * @param idTypeObjet identifiant du type d'objet
+	 * @param idTypeMission identifiant du type de mission à supprimer
+	 */
 	@RequestMapping(value = "/typeObjet/{idTypeObjet}/typeMission/{idTypeMission}", method = RequestMethod.DELETE)
 	public void deleteTypeMission(
 			@PathVariable("idTypeObjet") long idTypeObjet,
@@ -88,9 +109,8 @@ public class BackendController {
 		to.deleteTypeMission(idTypeMission);
 	}
 
-	/*
-	 * Methode lié à l'ORM
-	 */
+	/* ---------------------------------------------------- METHODE ORM ---------------------------------------------------------------*/
+
 	public List<TypeObjet> loadTypeObjets() {
 		return null;
 	}
