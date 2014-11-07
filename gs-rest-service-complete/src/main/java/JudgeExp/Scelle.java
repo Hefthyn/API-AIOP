@@ -13,6 +13,9 @@ public class Scelle {
 
 	}
 
+	public Scelle(long numeroScelle){
+		this.setNumeroScelle(numeroScelle);
+	}
 	/**
 	 * Constructeur avec numeroScelle, numeroPV,commentaire
 	 * 
@@ -46,7 +49,7 @@ public class Scelle {
 	 * @param numeroScelle
 	 * @return
 	 */
-	public Scelle load(long numeroScelle) {
+	public Scelle load() {
 		return null;
 	}
 

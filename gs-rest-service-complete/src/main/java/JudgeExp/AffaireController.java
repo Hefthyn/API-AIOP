@@ -197,13 +197,13 @@ public class AffaireController {
 
 	// Modifie un scelle d'une affaire
 	@RequestMapping(value = "/affaire/{idAffaire}/scelles/{numeroScelle}", method = RequestMethod.PUT)
-	public void putFrais(@PathVariable("idAffaire") long idAffaire,
+	public void putScelle(@PathVariable("idAffaire") long idAffaire,
 			@PathVariable("numeroScelle") long numeroScelle,
 			@RequestParam("numeroPV") long numeroPV,
 			@RequestParam("commentaire") String commentaire) {
 
-		Scelle x = new Scelle();
-		x.load(numeroScelle);
+		Scelle x = new Scelle(numeroScelle);
+		x.load();
 		x.setNumeroPV(numeroPV);
 		x.setCommentaire(commentaire);
 		x.save(idAffaire);

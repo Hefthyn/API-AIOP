@@ -59,7 +59,7 @@ public class Frais {
 	}
 	
 	
-	/**
+	/*
 	 * Méthodes lidées à l'ORM
 	 */
 	
