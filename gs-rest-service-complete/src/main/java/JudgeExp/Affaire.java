@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Affaire {
-	
+
 	private String nomAffaire;
 	// Numéros
 	private long idAffaire;
@@ -20,7 +20,7 @@ public class Affaire {
 	private String DateRetourScelle;
 	private String dateDevis;
 	private String dateRemise;
-	
+
 	private String LieuRecupScelle;
 	private String LieuRetourScelle;
 	private long nbPageNb;
@@ -31,24 +31,25 @@ public class Affaire {
 	private double montantFacture;
 	private double pourcentageRemise;
 	private boolean delais10j;
-	
+
 	// Frais à gérer
 	private List<Frais> frais;
 	// Etat
 	private String Etat;
 
+	// Scelle à gérer
+	private List<Scelle> scelles;
 
-
-	/** 
+	/**
 	 * Constructeurs
-	 */	
-	
+	 */
+
 	public Affaire() {
-		
+
 	}
-	
-	public Affaire (long id) {
-		
+
+	public Affaire(long id) {
+
 		setIdAffaire(id);
 		setNomAffaire("Affaire" + id);
 		setNumInstruction(1);
@@ -74,15 +75,15 @@ public class Affaire {
 
 	}
 
-	public Affaire (String nom) {
+	public Affaire(String nom) {
 		setNomAffaire(nom);
 	}
-	
-	public Affaire (long id, String nom) {
+
+	public Affaire(long id, String nom) {
 		setIdAffaire(id);
 		setNomAffaire(nom);
 	}
-	
+
 	/**
 	 * Setters and Getters
 	 */
@@ -277,7 +278,7 @@ public class Affaire {
 	public void setNomAffaire(String nomAffaire) {
 		this.nomAffaire = nomAffaire;
 	}
-	
+
 	public String getEtat() {
 		return Etat;
 	}
@@ -285,30 +286,46 @@ public class Affaire {
 	public void setEtat(String etat) {
 		Etat = etat;
 	}
-	
+
+	public List<Scelle> getScelles() {
+		return scelles;
+	}
+
+	public void setScelles(List<Scelle> scelle) {
+		this.scelles = scelle;
+	}
+
 	/*
 	 * Méthodes lidées à l'ORM
 	 */
 
 	// Sauvegarde de l'affaire en base
 	public void save() {
-		
-		
+
 	}
 
 	// création d'une nouvelle affaire en base
 	public void create() {
-		
+
 	}
 
-	// Recherche de toute les affaires de la base. 
+	// Recherche de toute les affaires de la base.
 	public List<Affaire> getAllAffaires() {
 		return null;
 	}
 
+	// Recherche un scelle d'affaire
+	public Scelle getScelle(long numeroScelle) {
+		return null;
+	}
+	
+	//delete un scelle d'affaire
+	public void deleteScelle(long numeroScelle){
+		
+	}
 	// charge une affaire
 	public void load(long id) {
-		
+
 	}
 
 }
