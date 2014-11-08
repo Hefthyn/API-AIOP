@@ -61,6 +61,21 @@ public class AffaireController {
 		return newScelle;
 	}
 
+	/**
+	 * Méthode de liaison d'une type mission à un type d'objet pour un scellé d'une affaire
+	 * @param idAffaire identifiant de l'affaire concernée
+	 * @param idScelle identifiant du scellé concerné
+	 * @param idTypeObjet identifiant du type d'objet à lier
+	 * @param idTypeMission identifiant du type de mission à lier
+	 */
+	@RequestMapping(value = "/affaire/{idAffaire}/scelle/{numeroScelle}/typeObjet/{idTypeObjet}/typeMissions", method = RequestMethod.POST)
+	public void createTypeMissionForTypeObjetInScelleInAffaire(@PathVariable("idAffaire") long idAffaire, @PathVariable("numeroScelle") long numeroScelle,
+			@PathVariable("idTypeObjet") long idTypeObjet,
+			@RequestParam("idTypeMission") String idTypeMission) {
+		Affaire x = new Affaire(idAffaire);
+		x.load(idAffaire);
+		x.createMissionForTypeObjetInScelle(numeroScelle,idTypeObjet,idTypeMission);
+	}
 	
 /* ---------------------------------------------------- METHODE GET ---------------------------------------------------------------*/
 
@@ -161,6 +176,20 @@ public class AffaireController {
 		return x.getScelles();
 	}
 
+	@RequestMapping(value = "/affaire/{idAffaire}/typeObjet/{idTypeObjet}/typeMissions/{idTypeMission}/nbObjet", method = RequestMethod.GET)
+	public void getNbObjetForTypeObjetOfTypeMissionInAffaire(@PathVariable("idAffaire") long idAffaire,
+			@PathVariable("numeroScelle") long numeroScelle,
+			@PathVariable("idTypeObjet") long idTypeObjet,
+			@PathVariable("idTypeMission") long idTypeMission,
+			@RequestParam("libTypeMission") long libTypeMission,
+			@RequestParam("prixMission") String prixMission) {
+		
+		// Je ne sais pas comment ça va marcher avec l'ORM
+		Affaire x = new Affaire(idAffaire);
+		x.load(idAffaire);
+		x.nbObjet(idTypeObjet,idTypeMission);
+	}
+	
 	/* ---------------------------------------------------- METHODE PUT ---------------------------------------------------------------*/
 	
 	/**
@@ -281,9 +310,31 @@ public class AffaireController {
 		x.load();
 		x.setNumeroPV(numeroPV);
 		x.setCommentaire(commentaire);
-		x.save(idAffaire);
+		x.save(numeroScelle);
 	}
 
+	/**
+	 * Méthode de modification d'une type mission pour un type d'objet d'un scellé d'une affaire
+	 * @param idAffaire identifiant de l'affaire concernée
+	 * @param numeroScelle identifiant du scellé concerné
+	 * @param idTypeObjet identifiant du type d'objet concerné
+	 * @param idTypeMission identifiant du type de mission à modifier
+	 * @param libTypeMission nouveau libellé
+	 * @param prixMission nouveau prix
+	 */
+	@RequestMapping(value = "/affaire/{idAffaire}/scelles/{numeroScelle}/typeObjet/{idTypeObjet}/typeMissions/{idTypeMission}", method = RequestMethod.PUT)
+	public void putTypeMissionForTypeObjetInScelle(@PathVariable("idAffaire") long idAffaire,
+			@PathVariable("numeroScelle") long numeroScelle,
+			@PathVariable("idTypeObjet") long idTypeObjet,
+			@PathVariable("idTypeMission") long idTypeMission,
+			@RequestParam("libTypeMission") long libTypeMission,
+			@RequestParam("prixMission") String prixMission) {
+		
+		// Je ne sais pas comment ça va marcher avec l'ORM
+		Scelle x = new Scelle(numeroScelle);
+		x.load();
+		x.updateTypeMissionForTypeObjetInScelle(idTypeObjet,idTypeMission,libTypeMission,prixMission);
+	}
 	/* -------------------------------------------------- METHODE DELET -------------------------------------------------------------*/
 	
 	/**

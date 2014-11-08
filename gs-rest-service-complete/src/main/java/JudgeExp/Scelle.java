@@ -52,6 +52,12 @@ public class Scelle {
 	public Scelle load() {
 		return null;
 	}
+	
+	public void updateTypeMissionForTypeObjetInScelle(long idTypeObjet,
+			long idTypeMission, long libTypeMission, String prixMission) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	/*
 	 * Setters and Getters
@@ -80,5 +86,7 @@ public class Scelle {
 	public void setCommentaire(String commentaire) {
 		this.commentaire = commentaire;
 	}
+
+
 
 }

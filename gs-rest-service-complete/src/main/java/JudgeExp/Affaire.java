@@ -328,4 +328,16 @@ public class Affaire {
 
 	}
 
+	// créer un type de mission pour un type d'objet d'un scellé
+	public void createMissionForTypeObjetInScelle(long idScelle,
+			long idTypeObjet, String idTypeMission) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void nbObjet(long idTypeObjet, long idTypeMission) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
