@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -59,6 +61,22 @@ public class AffaireController {
 		Scelle newScelle = new Scelle(numeroScelle, numeroPV, commentaire);
 		newScelle.save(idAffaire);
 		return newScelle;
+	}
+	
+	//nana
+	/**
+	 * Méthode de création d'un objet pour une affaire
+	 * @param idAffaire identifiant de l'affaire concernée
+	 * @param numeroScelle numéro du scellé concerné
+	 */
+	@RequestMapping(value = "/affaire/{idAffaire}/scelles/{numeroScelle}/objets", method = RequestMethod.POST)
+	public Objet createObjetScelleAffaire(@PathVariable("idAffaire") long idAffaire, @PathVariable("numeroScelle") long numeroScelle,
+			@RequestParam("idObjet") long idObjet,
+			@RequestParam("libelleObjet") String libelleObjet,
+			@RequestParam("idTypeObjet") long idTypeObjet) {
+		Objet newObjet = new Objet(idObjet, libelleObjet, idTypeObjet);
+		newObjet.save(numeroScelle);
+		return newObjet;
 	}
 
 	/**
@@ -142,7 +160,40 @@ public class AffaireController {
 
 		return x.getEtat();
 	}
+	
+//nana
+	/**
+	 * Méthode de récupération des types objets d'une affaire
+	 * @param idAffaire identifiant de l'affaire
+	 * @return liste des types objets de l'affaire
+	 * @author narjisse Zaki
+	 */
+	@RequestMapping(value = "/affaire/{idAffaire}/typesObjets", method = RequestMethod.GET)
+	public List<TypeObjet> getAllTypesObjetsAffaire(
+			@PathVariable("idAffaire") long idAffaire) {
 
+		// il faudra le charger depuis la bdd et appeller le constructeur vide
+		Affaire a = new Affaire();
+		a.load(idAffaire);
+		return a.getTypesObjets();
+	}
+//nana
+	/**
+	 * Méthode de récupération des objets d' un type objet d'une affaire
+	 * @param idAffaire identifiant de l'affaire
+	 * @param idTypeObjet identifiant d'un type objet d'une affaire
+	 * @return liste des objets d'un type objet d'une affaire
+	 * @author narjisse Zaki
+	 */
+	@RequestMapping(value = "/affaire/{idAffaire}/typeObjet/{idTypeObjet}/objets", method = RequestMethod.GET)
+	public List<Objet> getAllObjetsTypeObjetAffaire(
+			@PathVariable("idAffaire") long idAffaire,
+			@PathVariable("idTypeObjet") long idTypeObjet) {
+		Affaire a = new Affaire();
+		a.load(idAffaire);
+		return a.getObjetsFindByIdTypeObjet(idTypeObjet);
+	}
+	
 	/**
 	 * Méthode de récupération d'un scellé d'une affaire
 	 * @param idAffaire identifiant de l'affaire
@@ -174,6 +225,41 @@ public class AffaireController {
 		// x.load(idAffaire);
 
 		return x.getScelles();
+	}
+	
+	//nana
+	/**
+	 * Méthode de récupération des objets d'un scelle d'une affaire
+	 * @param idAffaire identifiant de l'affaire
+	 * @param numeroScelle numéro du scelle
+	 * @return liste des objets d'un scelle d'une affaire
+	 * @author narjisse Zaki
+	 */
+	@RequestMapping(value = "/affaire/{idAffaire}/scelles/{numeroScelle}/objets", method = RequestMethod.GET)
+	public List<Objet> getAllObjetsScelleAffaire(
+			@PathVariable("idAffaire") long idAffaire,
+			@PathVariable("numeroScelle") long numeroScelle) {
+		Scelle sc = new Scelle();
+		sc.load(numeroScelle);
+		return sc.getObjets();
+	}
+	//nana
+	/**
+	 * Méthode de récupération d'un objet d'un scelle d'une affaire
+	 * @param idAffaire identifiant de l'affaire
+	 * @param numeroScelle numéro du scelle qui contient l'objet 
+	 * @param idObjet l'identifiant de l'objet à recuperer
+	 * @return l'objet souhaité
+	 * @author narjisse Zaki
+	 */
+	@RequestMapping(value = "/affaire/{idAffaire}/scelles/{numeroScelle}/objet/{idObjet}", method = RequestMethod.GET)
+	public Objet getObjetScelleAffaire(@PathVariable("idAffaire") long idAffaire,
+			@PathVariable("numeroScelle") long numeroScelle,
+			@PathVariable("idObjet") long idObjet) {
+		// il faudra le charger depuis la bdd et appeller le constructeur vide
+		Scelle sc = new Scelle();
+		sc.load(numeroScelle);	
+		return sc.getObjetfindById(idObjet);
 	}
 
 	@RequestMapping(value = "/affaire/{idAffaire}/typeObjet/{idTypeObjet}/typeMissions/{idTypeMission}/nbObjet", method = RequestMethod.GET)
@@ -312,6 +398,33 @@ public class AffaireController {
 		x.setCommentaire(commentaire);
 		x.save(numeroScelle);
 	}
+	
+	//nana
+	/**
+	 * Méthode de modification d'un objet dans un scelle dans une affaire
+	 * @param idAffaire identifiant de l'affaire
+	 * @param numeroScelle numéro du scellé qui contient l'objet
+	 * @param idObjet identifiant de l'objet à modifier
+	 * @param libelleObjet nouveau libelle de l'objet
+	 * @param idTypeObjet nouveau type de l'objet
+	 * @param numeroScelle nouveau numéro du scellé qui contient l'objet
+	 * @author narjisse Zaki
+	 */
+	@RequestMapping(value = "/affaire/{idAffaire}/scelles/{numeroScelle}/objets/{idObjet}", method = RequestMethod.PUT)
+	public void putObjet(@PathVariable("idAffaire") long idAffaire,
+			@PathVariable("numeroScelle") long numeroScelleOld,
+			@PathVariable("idObjet") long idObjet,
+			@RequestParam("libelleObjet") String libelleObjet,
+			@RequestParam("idTypeObjet") long idTypeObjet, 
+			@RequestParam("numeroScelle") long numeroScelleNew){
+
+		Objet obj = new Objet();
+		obj.load();
+		obj.setLibelleObjet(libelleObjet);
+		obj.setIdTypeObjet(idTypeObjet);
+		obj.save(numeroScelleNew);
+	}
+	
 
 	/**
 	 * Méthode de modification d'une type mission pour un type d'objet d'un scellé d'une affaire
@@ -335,7 +448,7 @@ public class AffaireController {
 		x.load();
 		x.updateTypeMissionForTypeObjetInScelle(idTypeObjet,idTypeMission,libTypeMission,prixMission);
 	}
-	/* -------------------------------------------------- METHODE DELET -------------------------------------------------------------*/
+	/* -------------------------------------------------- METHODE DELETE -------------------------------------------------------------*/
 	
 	/**
 	 * Méthode de suppression d'un frais d'une affaire
@@ -360,6 +473,23 @@ public class AffaireController {
 		Affaire a = new Affaire();
 		a.load(idAffaire);
 		a.deleteScelle(numeroScelle);
+	}
+	
+	//nana
+	/**
+	 * Méthode de suppression d'un objet d'un scelle d'une affaire
+	 * @param idAffaire identifiant de l'affaire
+	 * @param numeroScelle identifiant du scellé contenant l'objet
+	 * @param idObjet identifiant de l'objet à supprimer
+	 * @author narjisse Zaki
+	 */
+	@RequestMapping(value = "/affaires/{idAffaire}/scelles/{numeroScelle}/objet/{idObjet}", method = RequestMethod.DELETE)
+	public void deleteObjetInScelle(@PathVariable("idAffaire") long idAffaire,
+			@PathVariable("numeroScelle") long numeroScelle,
+			@PathVariable("idObjet") long idObjet) {
+		Scelle sc = new Scelle();
+		sc.load(numeroScelle);
+		sc.deleteObjectById(idObjet);
 	}
 
 }

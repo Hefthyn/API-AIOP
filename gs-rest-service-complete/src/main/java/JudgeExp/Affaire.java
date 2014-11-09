@@ -72,6 +72,8 @@ public class Affaire {
 		this.frais = new ArrayList<Frais>();
 		this.frais.add(new Frais(1));
 		this.frais.add(new Frais(2));
+		this.scelles = new ArrayList<Scelle>();
+		this.scelles.add(new Scelle(123,4,"scelle essai"));
 
 	}
 
@@ -316,7 +318,13 @@ public class Affaire {
 
 	// Recherche un scelle d'affaire
 	public Scelle getScelle(long numeroScelle) {
-		return null;
+		for(int i=0;i<scelles.size();i++){
+			if(this.scelles.get(i).getNumeroScelle()==numeroScelle){
+				return scelles.get(i);
+				
+			}
+		}
+		return null ;
 	}
 	
 	//delete un scelle d'affaire
@@ -338,6 +346,15 @@ public class Affaire {
 	public void nbObjet(long idTypeObjet, long idTypeMission) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public List<TypeObjet> getTypesObjets() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public List<Objet> getObjetsFindByIdTypeObjet(long idTypeObjet) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
